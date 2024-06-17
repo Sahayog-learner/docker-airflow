@@ -1,0 +1,24 @@
+version: "3"
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: dockerfile
+    command: webserver
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+    ports:
+      - "8080:8080"
+  scheduler:
+    build:
+      context: .
+      dockerfile: dockerfile
+    command: scheduler
+    volumes:
+      - ./dags:/usr/local/airflow/dags
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_USER=airflow
+      - MYSQL_PASSWORD=airflow
+      - MYSQL_DB=airflow
